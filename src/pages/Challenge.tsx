@@ -100,17 +100,19 @@ export default function Challenge() {
       return;
     }
     onReset();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const move = (velocity: number) => {
       scene.addAction({ type: ActionEnum.MOVE, velocity } as MoveAction);
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const jump = (velocity: number) => {
       scene.addAction({ type: ActionEnum.JUMP, velocity } as JumpAction);
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const wait = (ms: number) => {
       scene.addAction({ type: ActionEnum.WAIT, ms } as WaitAction);
+    }
+
+    // TODO: think how to fix that problem
+    if (!move && !jump && !wait) {
+      console.log(move, jump, wait);
     }
 
     eval(text);
