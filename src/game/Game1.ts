@@ -5,6 +5,7 @@ import platformSrc from '../assets/game/platform.png';
 import bombSrc from '../assets/game/bomb.png';
 import dudeSrc from '../assets/game/dude.png';
 
+console.log(skySrc, starSrc);
 
 export enum ActionEnum {
   MOVE,
