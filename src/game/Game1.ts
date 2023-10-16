@@ -104,7 +104,7 @@ export class Game1 extends Phaser.Scene {
         repeat: -1
       });
       this.physics.add.collider(this.player, this.platforms);
-      this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', color: '#000' });
+      this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', color: '#FFF' });
       this.reset();
     }
 
