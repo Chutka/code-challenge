@@ -1,9 +1,9 @@
 import Phaser from "phaser";
-import skySrc from '../assets/game/sky.png';
-import starSrc from '../assets/game/star.png';
-import platformSrc from '../assets/game/platform.png';
-import bombSrc from '../assets/game/bomb.png';
-import dudeSrc from '../assets/game/dude.png';
+import skySrc from '@/assets/game/sky.png';
+import starSrc from '@/assets/game/star.png';
+import platformSrc from '@/assets/game/platform.png';
+import bombSrc from '@/assets/game/bomb.png';
+import dudeSrc from '@/assets/game/dude.png';
 
 console.log(skySrc, starSrc);
 
