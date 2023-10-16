@@ -1,9 +1,9 @@
 import Phaser from "phaser";
-import skySrc from '../assets/game/sky.png?raw';
-import starSrc from '../assets/game/star.png?raw';
-import platformSrc from '../assets/game/platform.png?raw';
-import bombSrc from '../assets/game/bomb.png?raw';
-import dudeSrc from '../assets/game/dude.png?raw';
+import skySrc from '../assets/game/sky.png?url';
+import starSrc from '../assets/game/star.png?url';
+import platformSrc from '../assets/game/platform.png?url';
+import bombSrc from '../assets/game/bomb.png?url';
+import dudeSrc from '../assets/game/dude.png?url';
 
 export enum ActionEnum {
   MOVE,
