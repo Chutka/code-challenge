@@ -1,4 +1,9 @@
 import Phaser from "phaser";
+import skySrc from '../assets/game/sky.png?url';
+import starSrc from '../assets/game/star.png?url';
+import platformSrc from '../assets/game/platform.png?url';
+import bombSrc from '../assets/game/bomb.png?url';
+import dudeSrc from '../assets/game/dude.png?url';
 
 export enum ActionEnum {
   MOVE,
@@ -46,12 +51,7 @@ export class Game1 extends Phaser.Scene {
     finishCallback?: () => void;
 
     preload () {
-      const skySrc = new URL('../assets/game/sky.png', import.meta.url).href;
-      const starSrc = new URL('../assets/game/star.png', import.meta.url).href;
-      const platformSrc = new URL('../assets/game/platform.png', import.meta.url).href;
-      const bombSrc = new URL('../assets/game/bomb.png', import.meta.url).href;
-      const dudeSrc = new URL('../assets/game/dude.png', import.meta.url).href;
-
+      
       this.load.image('sky', skySrc);
       this.load.image('ground', platformSrc);
       this.load.image('star', starSrc);
