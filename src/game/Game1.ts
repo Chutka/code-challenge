@@ -187,10 +187,8 @@ export class Game1 extends Phaser.Scene {
         this.scoreText?.setText(`Score: ${this.score}`);
 
         if (this.stars?.countActive(true) === 0) {
-          this.physics?.pause();
-          this.actionsQueue = [];
-          this.finishCallback?.();
           this.reset();
+          this.finishCallback?.();
         }
     }
 
@@ -199,15 +197,21 @@ export class Game1 extends Phaser.Scene {
         this.gameOver = true;
     }
 
-    private reset() {
+    reset() {
+      this.resetActions();
       this.resetScore();
       this.resetPlayer();
       this.resetStarts();
       return true;
     }
 
+    private resetActions() {
+      this.lastAction = undefined;
+      this.actionsQueue = [];
+    }
+
     private resetPlayer() {
-      this.player?.setPosition(400, this.player.body.position.y);
+      this.player?.setPosition(400, 500);
       this.player?.setVelocity(0);
       this.player?.anims.play('turn');
     }

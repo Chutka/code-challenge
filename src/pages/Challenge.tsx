@@ -45,6 +45,11 @@ export default function Challenge() {
     '// jump(100) - подпрыгнет на 100',
     '// 3) wait - просто подождать перед следующим дейстием',
     '// wait(1000) - подождать 1 секунду (передавать значения нужно в миллисекундах',
+    '',
+    '',
+    '',
+    '',
+    '',
   ].join('\n');
 
   const onMount = useCallback((editor: Editor) => {
@@ -88,8 +93,7 @@ export default function Challenge() {
     if (!scene) {
       return;
     }
-    scene.addAction({ type: ActionEnum.RESET });
-    scene.addAction({ type: ActionEnum.WAIT, ms: 2000 } as WaitAction);
+    scene.reset();
   }, []);
 
   const onRun = useCallback(() => {
@@ -100,6 +104,8 @@ export default function Challenge() {
       return;
     }
     onReset();
+    
+    scene.addAction({ type: ActionEnum.WAIT, ms: 2000 } as WaitAction);
     const move = (velocity: number) => {
       scene.addAction({ type: ActionEnum.MOVE, velocity } as MoveAction);
     }
