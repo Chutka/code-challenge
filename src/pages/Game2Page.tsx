@@ -17,14 +17,14 @@ import debounce from "lodash/debounce";
 import MonacoEditor, { EditorProps } from "@monaco-editor/react";
 import Phaser from "phaser";
 
-import { createGame } from "../game";
+import { createGame } from "../games";
 import {
   ActionEnum,
   Game1,
   JumpAction,
   MoveAction,
   WaitAction,
-} from "../game/Game1";
+} from "../games/Game1/Game1";
 import Modal from "@mui/material/Modal";
 import { GameLayout } from "@/components";
 
@@ -42,7 +42,7 @@ const style = {
   p: 4,
 };
 
-export const Challenge: React.FC = () => {
+export const Game2Page: React.FC = () => {
   const [open, setOpen] = useState(false);
   const editorRef = useRef<Editor | undefined>(undefined);
   const gameContainerRef = useRef<HTMLDivElement>(null);

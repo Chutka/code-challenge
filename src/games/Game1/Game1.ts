@@ -1,9 +1,9 @@
 import Phaser from "phaser";
-import skySrc from "../assets/game/sky.png?url";
-import starSrc from "../assets/game/star.png?url";
-import platformSrc from "../assets/game/platform.png?url";
-import bombSrc from "../assets/game/bomb.png?url";
-import dudeSrc from "../assets/game/dude.png?url";
+import skySrc from "./assets/sky.png?url";
+import starSrc from "./assets/star.png?url";
+import platformSrc from "./assets/platform.png?url";
+import bombSrc from "./assets/bomb.png?url";
+import dudeSrc from "./assets/dude.png?url";
 
 export enum ActionEnum {
   MOVE,
@@ -102,7 +102,7 @@ export class Game1 extends Phaser.Scene {
       repeat: -1,
     });
     this.physics.add.collider(this.player, this.platforms);
-    this.scoreText = this.add.text(16, 16, "score: 0", {
+    this.scoreText = this.add.text(16, 16, "Счет: 0", {
       fontSize: "32px",
       color: "#FFF",
     });
@@ -189,7 +189,7 @@ export class Game1 extends Phaser.Scene {
 
     //  Add and update the score
     this.score += 1;
-    this.scoreText?.setText(`Score: ${this.score}`);
+    this.scoreText?.setText(`Счет: ${this.score}`);
 
     if (this.stars?.countActive(true) === 0) {
       this.reset();
@@ -223,7 +223,7 @@ export class Game1 extends Phaser.Scene {
 
   private resetScore() {
     this.score = 0;
-    this.scoreText?.setText(`Score: ${this.score}`);
+    this.scoreText?.setText(`Счет: ${this.score}`);
   }
 
   private resetStarts() {

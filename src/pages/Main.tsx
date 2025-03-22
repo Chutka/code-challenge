@@ -22,6 +22,11 @@ const GAMES: Game[] = [
     name: "Game 1",
     link: "game-1",
   },
+  {
+    img: game1,
+    name: "Game 2",
+    link: "game-2",
+  },
 ];
 
 export const Main: React.FC = () => {
@@ -40,7 +45,7 @@ export const Main: React.FC = () => {
               />
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography gutterBottom variant="h5" component="h2">
-                  Game 1
+                  {game.name}
                 </Typography>
               </CardContent>
               <CardActions>
