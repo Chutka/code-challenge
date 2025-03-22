@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import Phaser from "phaser";
 
 export function createGame(initConfig: Partial<Phaser.Types.Core.GameConfig>) {
   const config: Phaser.Types.Core.GameConfig = {
@@ -8,17 +8,17 @@ export function createGame(initConfig: Partial<Phaser.Types.Core.GameConfig>) {
     scale: {
       mode: Phaser.Scale.FIT,
       width: 800,
-      height: 600,    
+      height: 600,
     },
     physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 300 },
-            debug: false
-        }
+      default: "arcade",
+      arcade: {
+        gravity: { y: 300 },
+        debug: false,
+      },
     },
-    ...initConfig
-};
+    ...initConfig,
+  };
 
   return new Phaser.Game(config);
 }

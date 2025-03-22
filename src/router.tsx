@@ -1,22 +1,33 @@
-import { createBrowserRouter } from 'react-router-dom';
-import { Layout } from './components';
-import { Challenge } from './pages';
+import React from "react";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import { Layout } from "./components";
+import { Challenge, Main } from "./pages";
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Layout />,
     children: [
-      // {
-      //   path: '',
-      //   element: <Main />
-      // },
       {
-        path: '',
-        element: <Challenge />
-      }
-    ]
+        path: "",
+        element: (
+          <React.Suspense>
+            <Main />
+          </React.Suspense>
+        ),
+      },
+      {
+        path: "challenge",
+        element: (
+          <React.Suspense>
+            <Challenge />
+          </React.Suspense>
+        ),
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <Navigate to="/" />,
   },
 ]);
-
-

@@ -1,9 +1,10 @@
-import AppBar from '@mui/material/AppBar';
-import CodeIcon from '@mui/icons-material/Code';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { Outlet } from 'react-router-dom';
-import Footer from './Footer';
+import React from "react";
+import AppBar from "@mui/material/AppBar";
+import CodeIcon from "@mui/icons-material/Code";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { Outlet } from "react-router-dom";
+import Footer from "./Footer";
 
 export default function Layout() {
   return (
@@ -21,5 +22,5 @@ export default function Layout() {
       </main>
       <Footer />
     </>
-  )
+  );
 }
