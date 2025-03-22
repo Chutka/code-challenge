@@ -3,14 +3,17 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Layout } from "./components";
 
 const defaultTheme = createTheme();
 
-export default function App() {
+export const App: React.FC = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
-      <RouterProvider router={router} />
+      <Layout>
+        <RouterProvider router={router} />
+      </Layout>
     </ThemeProvider>
   );
-}
+};

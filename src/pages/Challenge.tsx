@@ -5,8 +5,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -28,6 +26,7 @@ import {
   WaitAction,
 } from "../game/Game1";
 import Modal from "@mui/material/Modal";
+import { GameLayout } from "@/components";
 
 type Editor = Parameters<Required<EditorProps>["onMount"]>[0];
 
@@ -146,64 +145,61 @@ export const Challenge: React.FC = () => {
 
   return (
     <>
-      <Container sx={{ py: 8 }} maxWidth="xl">
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <Card
-              sx={{ height: "100%", display: "flex", flexDirection: "column" }}
-            >
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography gutterBottom variant="h5" component="h2">
-                  Game
-                </Typography>
-                <Box
-                  sx={{ height: "500px" }}
-                  component="div"
-                  ref={gameContainerRef}
-                ></Box>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <Card
-              sx={{ height: "100%", display: "flex", flexDirection: "column" }}
-            >
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography gutterBottom variant="h5" component="h2">
-                  Code
-                </Typography>
-                <MonacoEditor
-                  height="500px"
-                  defaultLanguage="javascript"
-                  defaultValue={defaultValue}
-                  onMount={onMount}
-                  options={{ renderWhitespace: "all", insertSpaces: true }}
-                />
-              </CardContent>
-              <CardActions>
-                <Button
-                  type="button"
-                  size="small"
-                  color="warning"
-                  onClick={onReset}
-                >
-                  Сбросить
-                </Button>
-                <Button
-                  type="button"
-                  size="small"
-                  color="secondary"
-                  variant="outlined"
-                  onClick={onRun}
-                >
-                  Запустить
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        </Grid>
-      </Container>
+      <GameLayout
+        game={
+          <Card
+            sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+          >
+            <CardContent sx={{ flexGrow: 1 }}>
+              <Typography gutterBottom variant="h5" component="h2">
+                Game
+              </Typography>
+              <Box
+                sx={{ height: "500px" }}
+                component="div"
+                ref={gameContainerRef}
+              ></Box>
+            </CardContent>
+          </Card>
+        }
+        editor={
+          <Card
+            sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+          >
+            <CardContent sx={{ flexGrow: 1 }}>
+              <Typography gutterBottom variant="h5" component="h2">
+                Code
+              </Typography>
+              <MonacoEditor
+                height="500px"
+                defaultLanguage="javascript"
+                defaultValue={defaultValue}
+                onMount={onMount}
+                options={{ renderWhitespace: "all", insertSpaces: true }}
+              />
+            </CardContent>
+            <CardActions>
+              <Button
+                type="button"
+                size="small"
+                color="warning"
+                onClick={onReset}
+              >
+                Сбросить
+              </Button>
+              <Button
+                type="button"
+                size="small"
+                color="secondary"
+                variant="outlined"
+                onClick={onRun}
+              >
+                Запустить
+              </Button>
+            </CardActions>
+          </Card>
+        }
+      />
       <Modal
         open={open}
         onClose={handleClose}

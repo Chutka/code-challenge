@@ -10,24 +10,33 @@ import Container from "@mui/material/Container";
 import game1 from "@/assets/game_1.png";
 import { Link } from "react-router";
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+interface Game {
+  img: string;
+  name: string;
+  link: string;
+}
+
+const GAMES: Game[] = [
+  {
+    img: game1,
+    name: "Game 1",
+    link: "game-1",
+  },
+];
 
 export const Main: React.FC = () => {
   return (
     <Container sx={{ py: 8 }} maxWidth="xl">
       <Grid container spacing={2}>
-        {cards.map((card) => (
-          <Grid item key={card} xs={12} sm={6} md={4}>
+        {GAMES.map((game) => (
+          <Grid item key={game.name} xs={12} sm={6} md={4}>
             <Card
               sx={{ height: "100%", display: "flex", flexDirection: "column" }}
             >
               <CardMedia
                 component="div"
-                sx={{
-                  // 16:9
-                  pt: "56.25%",
-                }}
-                image={game1}
+                sx={{ pt: "56.25%" }}
+                image={game.img}
               />
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography gutterBottom variant="h5" component="h2">
@@ -36,7 +45,7 @@ export const Main: React.FC = () => {
               </CardContent>
               <CardActions>
                 <Button size="small">
-                  <Link to="challenge">Запустить</Link>
+                  <Link to={game.link}>Запустить</Link>
                 </Button>
               </CardActions>
             </Card>

@@ -1,8 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-
-import { Copyright } from ".";
+import { Copyright } from "./Copyright";
 
 export default function Footer() {
   return (
