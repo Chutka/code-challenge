@@ -17,14 +17,7 @@ import debounce from "lodash/debounce";
 import MonacoEditor, { EditorProps } from "@monaco-editor/react";
 import Phaser from "phaser";
 
-import { createGame } from "../games";
-import {
-  ActionEnum,
-  Game1,
-  JumpAction,
-  MoveAction,
-  WaitAction,
-} from "../games/Game1/Game1";
+import { createGame, Game2 } from "../games";
 import Modal from "@mui/material/Modal";
 import { GameLayout } from "@/components";
 
@@ -75,22 +68,14 @@ export const Game2Page: React.FC = () => {
         if (element && !game) {
           const { width, height } = element.getBoundingClientRect();
           gameRef.current = createGame({
-            scene: Game1,
+            scene: Game2,
             parent: element,
             width,
             height,
+            physics: {
+              default: "arcade",
+            },
           });
-
-          setTimeout(() => {
-            const game = gameRef.current;
-            const scene = game?.scene.scenes[0] as Game1 | undefined;
-            if (!scene) {
-              return;
-            }
-            scene.onFinish(() => {
-              setOpen(true);
-            });
-          }, 2000);
         }
       }, 100),
     [],
@@ -104,37 +89,36 @@ export const Game2Page: React.FC = () => {
 
   const onReset = useCallback(() => {
     const game = gameRef.current;
-    const scene = game?.scene.scenes[0] as Game1 | undefined;
+    const scene = game?.scene.scenes[0] as Game2 | undefined;
     if (!scene) {
       return;
     }
-    scene.reset();
   }, []);
 
   const onRun = useCallback(() => {
     const text = editorRef.current?.getValue();
     const game = gameRef.current;
-    const scene = game?.scene.scenes[0] as Game1 | undefined;
+    const scene = game?.scene.scenes[0] as Game2 | undefined;
     if (!text || !scene) {
       return;
     }
     onReset();
 
-    scene.addAction({ type: ActionEnum.WAIT, ms: 2000 } as WaitAction);
-    const move = (velocity: number) => {
-      scene.addAction({ type: ActionEnum.MOVE, velocity } as MoveAction);
-    };
-    const jump = (velocity: number) => {
-      scene.addAction({ type: ActionEnum.JUMP, velocity } as JumpAction);
-    };
-    const wait = (ms: number) => {
-      scene.addAction({ type: ActionEnum.WAIT, ms } as WaitAction);
-    };
+    // scene.addAction({ type: ActionEnum.WAIT, ms: 2000 } as WaitAction);
+    // const move = (velocity: number) => {
+    //   scene.addAction({ type: ActionEnum.MOVE, velocity } as MoveAction);
+    // };
+    // const jump = (velocity: number) => {
+    //   scene.addAction({ type: ActionEnum.JUMP, velocity } as JumpAction);
+    // };
+    // const wait = (ms: number) => {
+    //   scene.addAction({ type: ActionEnum.WAIT, ms } as WaitAction);
+    // };
 
     // TODO: think how to fix that problem
-    if (!move && !jump && !wait) {
-      console.log(move, jump, wait);
-    }
+    // if (!move && !jump && !wait) {
+    //   console.log(move, jump, wait);
+    // }
 
     eval(text);
   }, [onReset]);
