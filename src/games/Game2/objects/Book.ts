@@ -1,9 +1,9 @@
 import Phaser from "phaser";
-import book1 from "./assets/books/book_1.png";
-import book2 from "./assets/books/book_2.png";
-import book3 from "./assets/books/book_3.png";
-import book4 from "./assets/books/book_4.png";
-import { GAME_TILE_SIZE, GameObject } from "./Game2.types";
+import book1 from "../assets/books/book_1.png";
+import book2 from "../assets/books/book_2.png";
+import book3 from "../assets/books/book_3.png";
+import book4 from "../assets/books/book_4.png";
+import { GAME_TILE_SIZE, GameObject } from "../Game2.types";
 
 export class Book {
   books?: Phaser.Physics.Arcade.StaticGroup;

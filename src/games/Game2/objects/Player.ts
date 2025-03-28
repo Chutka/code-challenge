@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-import player1 from "./assets/player/player_1.png";
+import player1 from "../assets/player/player_1.png";
 
 export class Player {
   private playerKey = "player";

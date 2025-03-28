@@ -1,10 +1,11 @@
 import Phaser from "phaser";
 
-import { Ground } from "./Ground";
 import { GAME_MATRIX } from "./Game2.types";
-import { Wall } from "./Wall";
-import { Player } from "./Player";
-import { Book } from "./Book";
+import { Wall } from "./objects/Wall";
+import { Player } from "./objects/Player";
+import { Book } from "./objects/Book";
+import { Score } from "./objects/Score";
+import { Ground } from "./objects/Ground";
 
 export class Game2 extends Phaser.Scene {
   private matrix = GAME_MATRIX;
@@ -12,8 +13,7 @@ export class Game2 extends Phaser.Scene {
   private wall = new Wall(this);
   private book = new Book(this);
   private player = new Player(this);
-
-  private score = 0;
+  private score = new Score(this);
 
   preload() {
     this.ground.load();
@@ -27,6 +27,7 @@ export class Game2 extends Phaser.Scene {
     this.wall.create(this.matrix);
     this.book.create(this.matrix);
     this.player.create();
+    this.score.create();
 
     this.physics.add.collider(this.wall.walls!, this.player.player!);
     this.physics.add.overlap(
@@ -46,6 +47,6 @@ export class Game2 extends Phaser.Scene {
     book,
   ) => {
     book.destroy();
-    this.score += 100;
+    this.score.updateScore(100);
   };
 }
