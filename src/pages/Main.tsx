@@ -4,10 +4,11 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import game1 from "@/assets/game_1.png";
+import game2 from "@/assets/game_2.png";
 import { Link } from "react-router";
 
 interface Game {
@@ -23,7 +24,7 @@ const GAMES: Game[] = [
     link: "game-1",
   },
   {
-    img: game1,
+    img: game2,
     name: "Game 2",
     link: "game-2",
   },
@@ -34,7 +35,7 @@ export const Main: React.FC = () => {
     <Container sx={{ py: 8 }} maxWidth="xl">
       <Grid container spacing={2}>
         {GAMES.map((game) => (
-          <Grid item key={game.name} xs={12} sm={6} md={4}>
+          <Grid key={game.name} size={{ xs: 12, sm: 6, md: 4 }}>
             <Card
               sx={{ height: "100%", display: "flex", flexDirection: "column" }}
             >
