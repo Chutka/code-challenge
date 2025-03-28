@@ -40,6 +40,8 @@ import wallB20 from "./assets/walls/wall_b_20.png";
 import { GAME_TILE_SIZE, GameObject } from "./Game2.types";
 
 export class Wall {
+  walls?: Phaser.Physics.Arcade.StaticGroup;
+
   constructor(private scene: Phaser.Scene) {}
 
   load() {
@@ -85,6 +87,8 @@ export class Wall {
   }
 
   create(matrix: (GameObject | GameObject[])[][]) {
+    this.walls = this.scene.physics.add.staticGroup();
+
     for (let vI = 0; vI < matrix.length; vI++) {
       for (let hI = 0; hI < matrix[vI].length; hI++) {
         if (matrix[vI][hI] !== "w") continue;
@@ -99,7 +103,7 @@ export class Wall {
           const item = Math.ceil(Math.random() * 20);
           wallKey = `wallB${item}`;
         }
-        this.scene.add.image(
+        this.walls.create(
           hI * GAME_TILE_SIZE + GAME_TILE_SIZE / 2,
           vI * GAME_TILE_SIZE + GAME_TILE_SIZE / 2,
           wallKey,

@@ -9,7 +9,7 @@ export class Player {
   private downKey = "down";
   private upKey = "up";
 
-  private player?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  player?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   private cursor?: Phaser.Types.Input.Keyboard.CursorKeys;
 
   constructor(private scene: Phaser.Scene) {}
@@ -23,6 +23,9 @@ export class Player {
 
   create() {
     this.player = this.scene.physics.add.sprite(85, 70, this.playerKey);
+    this.player.setSize(12, 12);
+    this.player.setBounce(0, 0);
+    this.player.setCollideWorldBounds(true);
     this.cursor = this.scene.input.keyboard?.createCursorKeys();
 
     this.scene.anims.create({
