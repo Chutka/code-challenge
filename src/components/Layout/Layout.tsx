@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import CodeIcon from "@mui/icons-material/Code";
 import { AppBar, Box, Container, Toolbar, Typography } from "@mui/material";
-import Footer from "./components/Footer";
+import { Footer } from "./components/Footer";
 
 interface LayoutProps {
   children: ReactElement;

@@ -35,7 +35,7 @@ const style = {
   p: 4,
 };
 
-export const Game2Page: React.FC = () => {
+const Game2Page: React.FC = () => {
   const [open, setOpen] = useState(false);
   const editorRef = useRef<Editor | undefined>(undefined);
   const gameContainerRef = useRef<HTMLDivElement>(null);
@@ -202,3 +202,5 @@ export const Game2Page: React.FC = () => {
     </>
   );
 };
+
+export default Game2Page;
