@@ -5,6 +5,27 @@
     <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <title>Code Challenge</title>
+    <script>
+      // Decode the path that 404.html stuffed into the query string,
+      // then restore it via history.replaceState before the app boots.
+      (function () {
+        var l = window.location;
+        if (l.search.startsWith("?/")) {
+          var decoded = l.search
+            .slice(2)
+            .split("&")
+            .map(function (s, i) {
+              return i === 0 ? s.replace(/~and~/g, "&") : s;
+            })
+            .join("?");
+          window.history.replaceState(
+            null,
+            "",
+            l.pathname.replace(/\/$/, "") + "/" + decoded + l.hash,
+          );
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
