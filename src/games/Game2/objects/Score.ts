@@ -19,4 +19,9 @@ export class Score {
     this.scoreValue += value;
     this.score?.setText(`Счëт: ${this.scoreValue}`);
   }
+
+  reset() {
+    this.scoreValue = 0;
+    this.updateScore(0);
+  }
 }

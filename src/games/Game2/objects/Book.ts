@@ -8,7 +8,10 @@ import { GAME_TILE_SIZE, GameObject } from "../Game2.types";
 export class Book {
   books?: Phaser.Physics.Arcade.StaticGroup;
 
-  constructor(private scene: Phaser.Scene) {}
+  constructor(
+    private scene: Phaser.Scene,
+    private matrix: (GameObject | GameObject[])[][],
+  ) {}
 
   load() {
     this.scene.load.image("book1", book1);
@@ -17,8 +20,21 @@ export class Book {
     this.scene.load.image("book4", book4);
   }
 
-  create(matrix: (GameObject | GameObject[])[][]) {
+  create() {
     this.books = this.scene.physics.add.staticGroup();
+    this.populate();
+  }
+
+  reset() {
+    // Clear children but keep the group instance so the overlap
+    // collider registered in Game2.create() stays valid.
+    this.books?.clear(true, true);
+    this.populate();
+  }
+
+  private populate() {
+    if (!this.books) return;
+    const matrix = this.matrix;
 
     for (let vI = 0; vI < matrix.length; vI++) {
       for (let hI = 0; hI < matrix[vI].length; hI++) {

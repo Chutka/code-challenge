@@ -42,7 +42,10 @@ import { GAME_TILE_SIZE, GameObject } from "../Game2.types";
 export class Wall {
   walls?: Phaser.Physics.Arcade.StaticGroup;
 
-  constructor(private scene: Phaser.Scene) {}
+  constructor(
+    private scene: Phaser.Scene,
+    private matrix: (GameObject | GameObject[])[][]
+  ) {}
 
   load() {
     this.scene.load.image("wall1", wall1);
@@ -86,7 +89,8 @@ export class Wall {
     this.scene.load.image("wallB20", wallB20);
   }
 
-  create(matrix: (GameObject | GameObject[])[][]) {
+  create() {
+    const matrix = this.matrix;
     this.walls = this.scene.physics.add.staticGroup();
 
     for (let vI = 0; vI < matrix.length; vI++) {

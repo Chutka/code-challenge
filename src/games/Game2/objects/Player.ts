@@ -3,6 +3,8 @@ import Phaser from "phaser";
 import player1 from "../assets/player/player_1.png";
 
 export class Player {
+  private DEFAULT_X = 88;
+  private DEFAULT_Y = 72;
   private playerKey = "player";
   private leftKey = "left";
   private rightKey = "right";
@@ -22,7 +24,7 @@ export class Player {
   }
 
   create() {
-    this.player = this.scene.physics.add.sprite(85, 70, this.playerKey);
+    this.player = this.scene.physics.add.sprite(this.DEFAULT_X, this.DEFAULT_Y, this.playerKey);
     this.player.setSize(12, 12);
     this.player.setBounce(0, 0);
     this.player.setCollideWorldBounds(true);
@@ -66,25 +68,53 @@ export class Player {
     });
   }
 
+  setVelocity(x: number, y: number) {
+    this.player?.setVelocity(x, y);
+  }
+
   update() {
     if (this.cursor?.left.isDown) {
-      if (this.player?.flipX) {
-        this.player?.setFlipX(false);
-      }
+      this.player?.setFlipX(false);
       this.player?.setVelocity(-100, 0);
       this.player?.anims.play(this.leftKey, true);
-    } else if (this.cursor?.right.isDown) {
+      return;
+    }
+    if (this.cursor?.right.isDown) {
       this.player?.setFlipX(true);
       this.player?.setVelocity(100, 0);
       this.player?.anims.play(this.rightKey, true);
-    } else if (this.cursor?.up.isDown) {
+      return;
+    }
+    if (this.cursor?.up.isDown) {
       this.player?.setVelocity(0, -100);
       this.player?.anims.play(this.upKey, true);
-    } else if (this.cursor?.down.isDown) {
+      return;
+    }
+    if (this.cursor?.down.isDown) {
       this.player?.setVelocity(0, 100);
       this.player?.anims.play(this.downKey, true);
-    } else {
-      this.player?.setVelocity(0, 0);
+      return;
     }
+
+    // No key held: let coded actions drive velocity, but still pick the
+    // matching animation so the sprite walks instead of T-posing.
+    const body = this.player?.body;
+    if (!body) return;
+    const { x: vx, y: vy } = body.velocity;
+    if (vx === 0 && vy === 0) {
+      this.player?.anims.stop();
+      return;
+    }
+    if (Math.abs(vx) >= Math.abs(vy)) {
+      this.player?.setFlipX(vx > 0);
+      this.player?.anims.play(vx < 0 ? this.leftKey : this.rightKey, true);
+    } else {
+      this.player?.anims.play(vy < 0 ? this.upKey : this.downKey, true);
+    }
+  }
+
+  reset() {
+    this.player?.setPosition(this.DEFAULT_X, this.DEFAULT_Y);
+    this.player?.setVelocity(0);
   }
 }

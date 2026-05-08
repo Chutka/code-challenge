@@ -1,7 +1,6 @@
 import React, {
   useCallback,
   useLayoutEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
@@ -12,14 +11,20 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import StarIcon from "@mui/icons-material/Star";
 import Box from "@mui/material/Box";
-import debounce from "lodash/debounce";
 
 import MonacoEditor, { EditorProps } from "@monaco-editor/react";
 import Phaser from "phaser";
 
-import { createGame, Game2 } from "../games";
 import Modal from "@mui/material/Modal";
 import { GameLayout } from "@/components";
+import {
+  ActionEnum,
+  BaseAction,
+  Game2,
+  MoveXAction,
+  MoveYAction,
+} from "@/games/Game2";
+import { createGame } from "@/games";
 
 type Editor = Parameters<Required<EditorProps>["onMount"]>[0];
 
@@ -35,90 +40,75 @@ const style = {
   p: 4,
 };
 
+const defaultValue = [
+  "// Доступные действия:",
+  "// 1) moveX(n) — движение по горизонтали на n клеток",
+  "//    moveX(1)  — на 1 клетку вправо",
+  "//    moveX(-1) — на 1 клетку влево",
+  "// 2) moveY(n) — движение по вертикали на n клеток",
+  "//    moveY(1)  — на 1 клетку вниз",
+  "//    moveY(-1) — на 1 клетку вверх",
+  "//",
+  "// Команды выполняются по очереди. Соберите все книги!",
+  "",
+  "",
+  "",
+].join("\n");
+
 const Game2Page: React.FC = () => {
   const [open, setOpen] = useState(false);
   const editorRef = useRef<Editor | undefined>(undefined);
   const gameContainerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Phaser.Game | undefined>(undefined);
-  const defaultValue = [
-    "// Доступные действия comment",
-    "// 1) move - движение по горизонтали (передавать нужно скорость)",
-    "// move(100) - движение вправо",
-    "// move(-100) - движение влево",
-    "// 2) jump - прыжок (будет выполнен, только если персонаж касается пола)",
-    "// jump(100) - подпрыгнет на 100",
-    "// 3) wait - просто подождать перед следующим действием",
-    "// wait(1000) - подождать 1 секунду (передавать значения нужно в миллисекундах)",
-    "",
-    "",
-    "",
-    "",
-    "",
-  ].join("\n");
 
   const onMount = useCallback((editor: Editor) => {
     editorRef.current = editor;
   }, []);
 
-  const initGame = useMemo(
-    () =>
-      debounce(() => {
-        const element = gameContainerRef.current;
-        const game = gameRef.current;
-        if (element && !game) {
-          const { width, height } = element.getBoundingClientRect();
-          gameRef.current = createGame({
-            scene: Game2,
-            parent: element,
-            width,
-            height,
-            physics: {
-              default: "arcade",
-            },
-          });
-        }
-      }, 100),
-    [],
-  );
-
   useLayoutEffect(() => {
-    setTimeout(() => {
-      initGame();
-    }, 200);
-  }, [initGame]);
+    const element = gameContainerRef.current;
+    const game = gameRef.current;
+    if (element && !game) {
+      const { width, height } = element.getBoundingClientRect();
+      gameRef.current = createGame({
+        scene: Game2,
+        parent: element,
+        width,
+        height,
+      });
+
+      setTimeout(() => {
+        const scene = gameRef.current?.scene.scenes[0] as Game2 | undefined;
+        scene?.onFinish(() => setOpen(true));
+      }, 500);
+    }
+  }, []);
 
   const onReset = useCallback(() => {
-    const game = gameRef.current;
-    const scene = game?.scene.scenes[0] as Game2 | undefined;
-    if (!scene) {
-      return;
-    }
+    const scene = gameRef.current?.scene.scenes[0] as Game2 | undefined;
+    scene?.reset();
   }, []);
 
   const onRun = useCallback(() => {
     const text = editorRef.current?.getValue();
-    const game = gameRef.current;
-    const scene = game?.scene.scenes[0] as Game2 | undefined;
+    const scene = gameRef.current?.scene.scenes[0] as Game2 | undefined;
     if (!text || !scene) {
       return;
     }
     onReset();
 
-    // scene.addAction({ type: ActionEnum.WAIT, ms: 2000 } as WaitAction);
-    // const move = (velocity: number) => {
-    //   scene.addAction({ type: ActionEnum.MOVE, velocity } as MoveAction);
-    // };
-    // const jump = (velocity: number) => {
-    //   scene.addAction({ type: ActionEnum.JUMP, velocity } as JumpAction);
-    // };
-    // const wait = (ms: number) => {
-    //   scene.addAction({ type: ActionEnum.WAIT, ms } as WaitAction);
-    // };
+    const moveX = (x: number) => {
+      const action: MoveXAction = { type: ActionEnum.MOVE_X, x };
+      scene.addAction(action as BaseAction);
+    };
+    const moveY = (y: number) => {
+      const action: MoveYAction = { type: ActionEnum.MOVE_Y, y };
+      scene.addAction(action as BaseAction);
+    };
 
-    // TODO: think how to fix that problem
-    // if (!move && !jump && !wait) {
-    //   console.log(move, jump, wait);
-    // }
+    if (!moveX || !moveY) {
+      console.log(moveX, moveY);
+    }
 
     eval(text);
   }, [onReset]);
@@ -195,7 +185,7 @@ const Game2Page: React.FC = () => {
             <StarIcon /> Вы справились!!! Молодец
           </Typography>
           <Typography id="modal-description" sx={{ mt: 2 }}>
-            Первый шаг на пути к программированию завершен!
+            Все книги собраны!
           </Typography>
         </Box>
       </Modal>

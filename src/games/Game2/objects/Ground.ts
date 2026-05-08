@@ -22,7 +22,10 @@ import ground20 from "../assets/grounds/ground20.png";
 import { GAME_TILE_SIZE, GameObject } from "../Game2.types";
 
 export class Ground {
-  constructor(private scene: Phaser.Scene) {}
+  constructor(
+    private scene: Phaser.Scene,
+    private matrix: (GameObject | GameObject[])[][],
+  ) {}
 
   load() {
     this.scene.load.image("ground1", ground1);
@@ -47,7 +50,9 @@ export class Ground {
     this.scene.load.image("ground20", ground20);
   }
 
-  create(matrix: (GameObject | GameObject[])[][]) {
+  create() {
+    const matrix = this.matrix;
+
     for (let vI = 0; vI < matrix.length; vI++) {
       for (let hI = 0; hI < matrix[vI].length; hI++) {
         const cell = Array.isArray(matrix[vI][hI])
